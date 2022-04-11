@@ -1,0 +1,17 @@
+Package: RamPack
+Date: 2022-04-10
+Version: 0.0.2
+Title: Ramin's Package
+Authors@R: person(given = "Ramin",
+           family = "Sakhtemani",
+           role = c("aut", "cre"),
+           email = "rsakhtemani@mgh.harvard.edu" )
+Author: Ramin Sakhtemani [aut, cre],           
+Maintainer: Ramin Sakhtemani <rsakhtemani@mgh.harvard.edu>         
+Depends: R (>= 3.6), dplyr
+Description: Collection of functions and tools I use from day to day.
+License: `use_mit_license()`
+Encoding: UTF-8
+LazyData: False
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
