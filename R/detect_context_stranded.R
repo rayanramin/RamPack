@@ -80,14 +80,14 @@ detect_context_stranded <- function(X, context = "NC"){
       posm2 <- X$REF[X$POS == pos - 2]
       if((X$REF[i] == "C") &&
          ((length(posp1)+length(posm1)+length(posm2))==3) &&
-         !(posm2 %in% c("T","A")) &&
-         !(posm1 %in% c("A","G")) &&
-         !(posp1 %in% c("C","T")))  1 -> output[i]
+         !((posm2 %in% c("T","A")) &&
+         (posm1 %in% c("A","G")) &&
+         (posp1 %in% c("C","T"))))  1 -> output[i]
       if((X$REF[i] == "G") &&
          ((length(posp2)+length(posp1)+length(posm1))==3) &&
-         !(posm1 %in% c("A","G")) &&
-         !(posp1 %in% c("C","T")) &&
-         !(posp2 %in% c("A","T"))) -1 -> output[i]
+         !((posm1 %in% c("A","G")) &&
+         (posp1 %in% c("C","T")) &&
+         (posp2 %in% c("A","T")))) -1 -> output[i]
     }
   })
   output
