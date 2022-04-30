@@ -9,7 +9,7 @@ detect_context_stranded(X, context = "NC")
 \arguments{
 \item{X}{data.frame with the following columns: POS (numeric) & REF ("A", "C", "G", "T")}
 
-\item{context}{context to be detected, corrently only "NC","TC","WRC" and "WRCY" are covered.}
+\item{context}{context to be detected, corrently only "NC","TC", "VC","WRC" and "WRCY" (nWRCY = not WRCY )are covered.}
 }
 \description{
 This function detects NC, TC, WRC, WRCY contexts and returns a vector of -1, 1 and 0 showing the presense and absense of the selected context. -1 and +1 shows the strand that cytosine is on.
