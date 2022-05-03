@@ -2,6 +2,7 @@
 
 export("%nin%")
 export(DEResult_table)
+export(Detect_Context)
 export(NDC)
 export(UX)
 export(UX_NC)
