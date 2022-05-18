@@ -7,9 +7,15 @@
 
 
 XDisplay <- function(version=10, from_system=F){
-  eval(parse(text = paste0('Sys.setenv("DISPLAY"="localhots:', version , '.0")')))
-  if(from_system){
-    try(system("echo $DISPLAY")) -> version
-    eval(parse(text = paste0('Sys.setenv("DISPLAY"=', version , '")')))
+  if(!from_system){
+    command=paste0('Sys.setenv("DISPLAY"="localhost:', version , '.0")')
+    cat(command,"\n")
+  eval(parse(text = command))
+  }  else if(from_system){
+    print("setting system environment")
+    system("echo $DISPLAY", intern = TRUE) -> version
+    command=paste0('Sys.setenv("DISPLAY"="localhost:', version , '")')
+    cat(command,"\n")
+    eval(parse(text = paste0('Sys.setenv("DISPLAY"="', version , '")')))
   }
 }

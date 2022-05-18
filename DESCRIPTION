@@ -7,11 +7,12 @@ Authors@R: person(given = "Ramin",
            role = c("aut", "cre"),
            email = "rsakhtemani@mgh.harvard.edu" )
 Author: Ramin Sakhtemani [aut, cre],           
-Maintainer: Ramin Sakhtemani <rsakhtemani@mgh.harvard.edu>         
+Maintainer: Ramin Sakhtemani <rsakhtemani@mgh.harvard.edu>
 Depends: R (>= 3.6), dplyr
 Description: Collection of functions and tools I use from day to day.
 License: `use_mit_license()`
 Encoding: UTF-8
-LazyData: False
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+NeedsCompilation: no
+Packaged: 2022-05-18 19:14:08 UTC; rz666
