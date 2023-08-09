@@ -167,16 +167,16 @@ mut_96_UI <- function(type_context, gr_sizes,UI=FALSE) {
       dplyr::group_by(categories, sample, .drop = FALSE) %>%
       dplyr::summarise(UI = mean(U)) %>%
       dplyr::mutate(UI = ifelse(is.na(UI), 0, UI))
-
+      counts <- tidyr::spread(counts, key = sample, value = UI, fill = 0)
   }else{
     # Count the mutations per type and per sample
     counts <- tibble::tibble("categories" = full_context, "sample" = sample_vector) %>%
       dplyr::filter(!is.na(categories)) %>%
       dplyr::group_by(categories, sample, .drop = FALSE) %>%
       dplyr::summarise(count = dplyr::n())
+      counts <- tidyr::spread(counts, key = sample, value = count, fill = 0)
   }
   # Transform the data into a mutation matrix
-  counts <- tidyr::spread(counts, key = sample, value = UI, fill = 0)
   unnecesary_cols <- which(colnames(counts) == "<NA>")
   mut_mat <- as.matrix(counts[, -c(1, unnecesary_cols)])
   rownames(mut_mat) <- counts$categories
