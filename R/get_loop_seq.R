@@ -19,3 +19,42 @@ duplicated_all <- function(x){
   tmp <- x[duplicated(x)]
   x %in% tmp
 }
+
+
+get_hairpin_seq <- function(D,stem_length=1, onlyLoop=FALSE){
+
+  ## load the genome
+  stopifnot(!require("BSgenome.Ecoli.WayneState.BH214V4", quietly = TRUE))
+  library(BSgenome.Ecoli.WayneState.BH214V4)
+
+  D %>% mutate(roc = looplen-looppos, loc = looppos-1) %>%
+    mutate(st = ifelse(ref==2, (POS-loc), (POS-roc)) , en = ifelse(ref==2, POS+roc, POS+loc)) %>%
+    mutate(stem_st = st - stem_length , stem_en = en + stem_length ) -> D
+
+  D$seq <- NA
+  ## to deal with circular genome
+  # beginning
+  D$seq[which(D$stem_st <=0)] <- lapply(which(D$stem_st <=0), function(i) paste0(BH214$BH214V4[(length(BH214$BH214V4)+D$stem_st[i]):length(BH214$BH214V4)] , BH214$BH214V4[1:D$stem_en[i]])) %>% unlist %>% toupper
+  ## end
+  D$seq[which(D$stem_en >length(BH214$BH214V4))] <- lapply(which(D$stem_en >length(BH214$BH214V4)), function(i) paste0(BH214$BH214V4[(D$stem_st[i]):length(BH214$BH214V4)] , BH214$BH214V4[1:(D$stem_en[i]-length(BH214$BH214V4))])) %>% unlist %>% toupper
+  ## middle of the sequence
+  D$seq[ which(D$stem_st >0 & D$stem_en <=length(BH214$BH214V4))] <- lapply(which(D$stem_st >0 & D$stem_en <=length(BH214$BH214V4)), function(i) paste0(BH214$BH214V4[(D$stem_st[i]):D$stem_en[i]])) %>% unlist %>% toupper
+
+  D$seq[D$ref==3] <- lapply(which(D$ref==3), function(i) seqinr::c2s(rev(seqinr::comp(seqinr::s2c(D$seq[i])))) ) %>% unlist %>% toupper
+
+  if (any(!(substr(D$seq,stem_length+D$looppos,stem_length+D$looppos)=="C"))) {
+    stop("something went wrong")
+  } else {
+    SEQS <-  lapply(D$seq, seqinr::s2c)
+    lapply(1:length(SEQS), function(i) {
+      SEQS[[i]][stem_length+D$looppos[i]] <- ".C." ;
+      SEQS[[i]][1+stem_length] <-  paste0('(',SEQS[[i]][1+stem_length] ) ;
+      SEQS[[i]][stem_length+D$looplen[i]] <-  paste0(SEQS[[i]][stem_length+D$looplen[i]],')' );
+      seqinr::c2s(SEQS[[i]]) }) %>%  unlist -> out
+  }
+  if(onlyLoop){
+    stringr::str_extract_all(out,"\\(.*?(.C.)?\\)|\\.C\\.",simplify = TRUE) %>%
+      apply(. ,1,paste,collapse="") -> out
+  }
+  return(out)
+}

@@ -1,6 +1,5 @@
 #' Set DISPLAY settings for X11 forwarding
-#' @example XDisplay(11)
-#' sets display environment to localhost:11.0
+#' @example XDisplay(11) :  sets display environment to localhost:11.0
 #'
 #' @param version int (default=10)
 #' @export
