@@ -11,7 +11,6 @@
 #' @param facet a character vector to be used for facet labels
 #' @export
 
-
 RivPlot <- function(input, fontsize=4,is_ui=FALSE,is_norm=FALSE,title="",AltCol=T, facet=NULL){
   plot_river2(input ,UI=is_ui, is_normalized=is_norm, fontsize=fontsize,alt_colors=AltCol, FacetNames=facet) +
     theme(legend.position = "none",

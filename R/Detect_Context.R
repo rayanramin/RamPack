@@ -37,8 +37,7 @@ Detect_Context <- function(ref_fasta,chr,pos,context){
     if(bb < ba){ context <- paste0(paste0(rep("N",ba-bb),collapse = ""),context)}
     if(bb > ba){ context <- paste0(context, paste0(rep("N",bb-ba),collapse = ""))}
     context <- stringr::str_replace(context,"X","C")
-  }
-  if(stringr::str_count(context,"X")==0){
+  } else if(stringr::str_count(context,"X")==0){
     l <- nchar(context)
     xp <- stringr::str_locate(context,"C")[1]
     ba = l-xp; bb = xp-1;
