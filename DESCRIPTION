@@ -1,6 +1,6 @@
 Package: RamPack
-Date: 2022-04-10
-Version: 0.0.2
+Date: 2023-08-30
+Version: 1.0.0
 Title: Ramin's Package
 Authors@R: person(given = "Ramin",
            family = "Sakhtemani",
